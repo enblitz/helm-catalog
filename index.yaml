@@ -9,6 +9,6 @@ entries:
     name: templated-workload
     type: application
     urls:
-    - https://github.com/enblitz/helm-catalog.git/templated-workload-0.1.0.tgz
+    - https://github.com/enblitz/helm-catalog/templated-workload-0.1.0.tgz
     version: 0.1.0
 generated: "2025-08-03T14:26:13.9309629+05:30"
