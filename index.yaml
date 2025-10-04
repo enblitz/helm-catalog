@@ -3,6 +3,16 @@ entries:
   templated-workload:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2025-10-04T08:22:48.294973542Z"
+    description: A generic Helm chart for deploying containerized apps
+    digest: b8bc28dc3768bac9280fc31fbd729ada731dbed4d3cfc9b92ae69f9b3fab2309
+    name: templated-workload
+    type: application
+    urls:
+    - https://github.com/enblitz/helm-catalog/releases/download/templated-workload-1.0.1/templated-workload-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2025-10-04T08:12:22.469096688Z"
     description: A generic Helm chart for deploying containerized apps
     digest: 8b424139effff0df675a7bd0094066bbffa74b5ece0b8ff9f3242ef92c909a44
@@ -21,4 +31,4 @@ entries:
     urls:
     - https://enblitz.github.io/helm-catalog/templated-workload-0.1.0.tgz
     version: 0.1.0
-generated: "2025-10-04T08:12:22.469104312Z"
+generated: "2025-10-04T08:22:48.294984843Z"
