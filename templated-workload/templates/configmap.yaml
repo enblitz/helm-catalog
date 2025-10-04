@@ -1,12 +1,12 @@
+{{- if .Values.app.environmentConfig }}
 ---
-{{- if .Values.environment.configurations }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}
   namespace: {{ .Release.Namespace }}
 data:
-  {{- range .Values.environment.configurations }}
+  {{- range .Values.app.environmentConfig }}
   {{ .name }}: {{ .value | quote }}
   {{- end }}
 {{- end }}

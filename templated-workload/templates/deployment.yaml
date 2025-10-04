@@ -1,20 +1,10 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Release.Name }}
   namespace: {{ .Release.Namespace }}
-  labels:
-    app: {{ .Release.Name }}
-    {{- with .Values.app.labels }}
-    {{- toYaml . | nindent 4 }}
-    {{- end }}
-  annotations:
-    {{- with .Values.app.annotations }}
-    {{- toYaml . | nindent 4 }}
-    {{- end }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.app.replicaCount }}
   selector:
     matchLabels:
       app: {{ .Release.Name }}
@@ -23,18 +13,27 @@ spec:
       labels:
         app: {{ .Release.Name }}
     spec:
+      imagePullSecrets:
+        - name: regcreds
       containers:
         - name: {{ .Release.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: "{{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}"
           ports:
-            - containerPort: {{ .Values.containerPort }}
-          {{- if .Values.environment.configurations }}
+            - containerPort: {{ .Values.app.port }}
+          {{- if .Values.app.environmentConfig }}
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}
           {{- end }}
-          resources: {{- toYaml .Values.resources | nindent 12 }}
-      nodeSelector: {{- toYaml .Values.nodeSelector | nindent 8 }}
-      tolerations: {{- toYaml .Values.tolerations | nindent 8 }}
-      affinity: {{- toYaml .Values.affinity | nindent 8 }}
+          {{- if .Values.app.secretConfig }}
+          envFrom:
+            - secretRef:
+                name: {{ .Release.Name }}
+          {{- end }}
+          app.resources:
+            limits:
+              cpu: {{ .Values.app.resources.limits.cpu }}
+              memory: {{ .Values.app.resources.limits.memory }}
+            requests:
+              cpu: {{ .Values.app.resources.requests.cpu }}
+              memory: {{ .Values.app.resources.requests.memory }}

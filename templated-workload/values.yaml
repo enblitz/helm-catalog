@@ -1,41 +1,48 @@
----
+# General App settings
 app:
-  name: "default-app"
-  labels: {}
-  annotations: {}
+  name: "generic-app"
+  image:
+    repository: "mydockerhub/generic-app"  # Docker image repository
+    tag: "latest"                          # Docker image tag
+  port: 8080                               # Application port (e.g., Java/Node/Frontend)
 
-replicaCount: 1
+  environmentConfig: []
+    # - name: DB_HOST
+    #   value: "localhost"
+    # - name: DB_USER
+    #   value: "autoship"
 
-image:
-  repository: ""
-  tag: "latest"
-  pullPolicy: IfNotPresent
+  secretConfig: []
+    # - name: DB_PASSWORD
+    #   value: "pass"  # This value will be base64 encoded
 
-containerPort: 3000
+  replicaCount: 1
 
-service:
-  enabled: true
-  type: ClusterIP
-  port: 80
+  resources:
+    limits:
+      cpu: "100m"
+      memory: "128Mi"
+    requests:
+      cpu: "50m"
+      memory: "64Mi"
 
-ingress:
-  enabled: false
-  className: ""
-  annotations: {}
-  hosts: []
-  tls: []
-
-resources: {}
-
-environment: 
-  configurations: []
+  # Service Settings
+  service:
+    type: ClusterIP
+    port: 80
 
 autoscaling:
   enabled: false
   minReplicas: 1
-  maxReplicas: 5
+  maxReplicas: 3
   targetCPUUtilizationPercentage: 80
-
-nodeSelector: {}
-tolerations: []
-affinity: {}
+  
+# Ingress Settings
+ingress:
+  enabled: false
+  name: ""
+  annotations: {}
+  hosts:
+    - host: "myapp.example.com"
+      paths:
+        - "/"
